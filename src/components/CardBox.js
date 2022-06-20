@@ -5,7 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
-export default function CardBox({ title }) {
+export default function CardBox({ title, description }) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
@@ -13,7 +13,7 @@ export default function CardBox({ title }) {
           {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Insert Text here
+          {description}
         </Typography>
       </CardContent>
     </Card>

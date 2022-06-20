@@ -11,13 +11,16 @@ import { Container } from "@mui/system";
 export default function App() {
   const [greeting, setGreeting] = React.useState("");
   const [tokenSymbol, setSymbol] = React.useState("");
-  const [accountValue, setAccountValue] = React.useState("");
+  const [ticketPrice, setTicketPrice] = React.useState("");
 
   useEffect(() => {
     blockchain.connectWallet();
     blockchain.fetchGreetings().then((greeting) => setGreeting(greeting));
     blockchain.getSymbol().then((symbol) => setSymbol(symbol));
-    blockchain.approve(50).then(console.log("Approved"));
+    //blockchain.approve(50).then(console.log("Approved"));
+    blockchain
+      .getTicketPrice()
+      .then((price) => setTicketPrice(price / 10 ** 18));
   }, []);
 
   return (
@@ -27,22 +30,26 @@ export default function App() {
         <Grid item xs={4}>
           <CardBox title={"Current Jackpot"} />
           <p>{tokenSymbol}</p>
+          <p>{ticketPrice}</p>
         </Grid>
 
         <Grid item xs={4}>
-          <CardBox title={"Previous Jackpot"} />
+          <CardBox
+            title={"Previous Jackpot"}
+            description={"Insert Text here"}
+          />
         </Grid>
 
         <Grid item xs={4}>
-          <CardBox title={"Winning Ticket"} />
+          <CardBox title={"Winning Ticket"} description={"Insert Text here"} />
         </Grid>
 
         <Grid item xs={4}>
-          <BuyTicketCardBox title={"Ticket Price"} />
+          <BuyTicketCardBox title={"Ticket Price"} description={"$MOK"} />
         </Grid>
 
         <Grid item xs={4}>
-          <CardBox title={"Locked Until"} />
+          <CardBox title={"Locked Until"} description={"Insert Text here"} />
         </Grid>
       </Grid>
     </Container>

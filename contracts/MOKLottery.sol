@@ -2,7 +2,6 @@
 pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract MOKLottery {
     address public owner;
@@ -10,6 +9,7 @@ contract MOKLottery {
     address[] public manager;
     address[] public players;
     uint256 lotteryPrice;
+    uint256 lastJackpot;
 
     constructor(address _token) {
         owner = msg.sender;
@@ -49,5 +49,10 @@ contract MOKLottery {
     //function to get balance of the contract
     function getBalance() public view returns (uint256) {
         return IERC20(MOKToken).balanceOf(address(this));
+    }
+
+    //function to get ticket price
+    function getTicketPrice() public view returns (uint256) {
+        return lotteryPrice;
     }
 }

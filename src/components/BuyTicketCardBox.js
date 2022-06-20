@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 
-const BuyTicketCardBox = ({ title }) => {
+const BuyTicketCardBox = ({ title, description }) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
@@ -12,7 +12,7 @@ const BuyTicketCardBox = ({ title }) => {
           {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          20 $MOK
+          {description}
         </Typography>
         <Button variant="contained" color="primary">
           Buy
