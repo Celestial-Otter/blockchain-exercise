@@ -9,7 +9,8 @@ contract MOKLottery {
     address[] public manager;
     address[] public players;
     uint256 lotteryPrice;
-    uint256 lastJackpot;
+    uint256 prizePool; //TODO: have money be split into this pool
+    uint256 feePool; //TODO: have money be split into this pool
 
     constructor(address _token) {
         owner = msg.sender;
@@ -54,5 +55,10 @@ contract MOKLottery {
     //function to get ticket price
     function getTicketPrice() public view returns (uint256) {
         return lotteryPrice;
+    }
+
+    //function to set ticet price
+    function setTicketPrice(uint256 _price) public ownerOnly {
+        lotteryPrice = _price;
     }
 }
