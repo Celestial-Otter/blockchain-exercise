@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 
 const BuyTicketCardBox = ({ title }) => {
   return (
-    <Card variant="outlined" sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 }}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {title}

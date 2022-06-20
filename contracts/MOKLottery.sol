@@ -1,12 +1,10 @@
-// SPDX-Licence-Identifier: MIT
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
 contract MOKlottery {
     address public owner;
     address[] public manager;
     address payable[] public players;
-
-    
 
     constructor() {
         owner = msg.sender;
@@ -28,14 +26,4 @@ contract MOKlottery {
     function addManager(address newManager) public ownerOnly {
         manager.push(newManager);
     }
-
-    //function to withdraw the funds from the contract
-    function withdraw() public ownerOnly {
-        msg.sender.transfer(address(this).balance);
-    }
-        
-    }
-
-    
-
 }

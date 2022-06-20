@@ -8,16 +8,14 @@ import { CardActionArea } from "@mui/material";
 export default function CardBox({ title }) {
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Insert Text here
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Insert Text here
+        </Typography>
+      </CardContent>
     </Card>
   );
 }
