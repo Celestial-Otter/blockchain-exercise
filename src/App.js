@@ -17,6 +17,7 @@ export default function App() {
     blockchain.connectWallet();
     blockchain.fetchGreetings().then((greeting) => setGreeting(greeting));
     blockchain.getSymbol().then((symbol) => setSymbol(symbol));
+    blockchain.approve(50).then(console.log("Approved"));
   }, []);
 
   return (

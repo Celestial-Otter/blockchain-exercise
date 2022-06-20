@@ -67,3 +67,29 @@ export const getSymbol = async () => {
   const symbol = await mokTokenContract.symbol();
   return symbol;
 };
+
+//function for user to approve the lottery contract to spend tokens
+export const approve = async (amount) => {
+  const { ethereum } = window;
+
+  if (!ethereum) {
+    alert("Please install MetaMask!");
+    return;
+  }
+
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
+  const mokTokenContract = new ethers.Contract(
+    MOKTokenContractAddress,
+    MOKToken.abi,
+    provider
+  );
+
+  const approve = await mokTokenContract.populateTransaction.approve(
+    MOKLotteryContractAddress,
+    amount
+  );
+
+  const tx = await signer.sendTransaction(approve); // send transaction using the signer
+  console.log(tx);
+};
