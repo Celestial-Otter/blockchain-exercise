@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-contract MOKlottery {
+contract MOKLottery {
     address public owner;
     address[] public manager;
     address payable[] public players;

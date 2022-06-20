@@ -4,7 +4,7 @@ import Greeter from "../artifacts/contracts/Greeter.sol/Greeter.json";
 
 let greeterContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; // contract address
 let MOKTokenContractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"; // contract address
-
+let MOKLotteryContractAddress = "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d"; // contract address
 export const connectWallet = async () => {
   // connect to wallet
   try {
@@ -66,25 +66,4 @@ export const getSymbol = async () => {
   );
   const symbol = await mokTokenContract.symbol();
   return symbol;
-};
-
-//function to transfer tokens to the contract
-export const transferTokens = async (amount) => {
-  // fetch greetings from contract
-  const { ethereum } = window;
-
-  if (!ethereum) {
-    alert("Please install MetaMask!");
-    return;
-  }
-
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const signer = provider.getSigner();
-  const mokTokenContract = new ethers.Contract(
-    MOKTokenContractAddress,
-    MOKToken.abi,
-    provider
-  );
-  const tx = await mokTokenContract.transfer(greeterContractAddress, amount);
-  return tx;
 };

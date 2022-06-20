@@ -29,6 +29,12 @@ async function main() {
   const mokToken = await MOKToken.deploy();
 
   console.log("MOKToken deployed to:", mokToken.address);
+
+  // We get the MOKLottery contract to deploy
+  const MOKLottery = await ethers.getContractFactory("MOKLottery");
+  const mokLottery = await MOKLottery.deploy();
+
+  console.log("MOKLottery deployed to:", mokLottery.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

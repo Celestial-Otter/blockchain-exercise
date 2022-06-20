@@ -3,10 +3,7 @@
 
 import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
-import Greeter from "./artifacts/contracts/Greeter.sol/Greeter.json";
-import MOKToken from "./artifacts/contracts/MOKToken.sol/MOKToken.json";
-import { ethers } from "ethers";
-import { connectWallet, fetchGreetings, getSymbol } from "./apis/blockchain";
+import * as blockchain from "./apis/blockchain";
 import CardBox from "./components/CardBox";
 import BuyTicketCardBox from "./components/BuyTicketCardBox";
 import { Container } from "@mui/system";
@@ -14,11 +11,12 @@ import { Container } from "@mui/system";
 export default function App() {
   const [greeting, setGreeting] = React.useState("");
   const [tokenSymbol, setSymbol] = React.useState("");
+  const [accountValue, setAccountValue] = React.useState("");
 
   useEffect(() => {
-    connectWallet();
-    fetchGreetings().then((greeting) => setGreeting(greeting));
-    getSymbol().then((symbol) => setSymbol(symbol));
+    blockchain.connectWallet();
+    blockchain.fetchGreetings().then((greeting) => setGreeting(greeting));
+    blockchain.getSymbol().then((symbol) => setSymbol(symbol));
   }, []);
 
   return (
