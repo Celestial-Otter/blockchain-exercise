@@ -9,6 +9,8 @@ contract MOKLottery {
     address[] public manager;
     address[] public players;
     uint256 lotteryPrice;
+    uint256 previousJackpot;
+    uint256 winningNumber;
     uint256 prizePool; //TODO: have money be split into this pool
     uint256 feePool; //TODO: have money be split into this pool
 
@@ -16,6 +18,10 @@ contract MOKLottery {
         owner = msg.sender;
         MOKToken = _token;
         lotteryPrice = 20 * (10**18);
+        previousJackpot = 0;
+        prizePool = 0;
+        feePool = 0;
+        winningNumber = 0;
     }
 
     //Modifier to restrict the function to the manager
@@ -47,6 +53,24 @@ contract MOKLottery {
         players.push(msg.sender);
     }
 
+    //function to roll a random number
+    function roll() private view returns (uint256) {
+        return
+            uint256(
+                keccak256(
+                    abi.encodePacked(block.difficulty, block.timestamp, players)
+                )
+            );
+    }
+
+    //function to pick the winner
+    function pickWinner() public managerOrOwner {
+        uint256 index = roll() % players.length;
+        IERC20(MOKToken).transfer(players[index], prizePool);
+        winningNumber = index;
+        players = new address[](0);
+    }
+
     //function to get balance of the contract
     function getBalance() public view returns (uint256) {
         return IERC20(MOKToken).balanceOf(address(this));
@@ -57,8 +81,18 @@ contract MOKLottery {
         return lotteryPrice;
     }
 
-    //function to set ticet price
+    //function to set ticket price
     function setTicketPrice(uint256 _price) public ownerOnly {
         lotteryPrice = _price;
+    }
+
+    //function to get the current prize pool
+    function getJackpot() public view returns (uint256) {
+        return prizePool;
+    }
+
+    //function to get the previous jackpot
+    function getPreviousJackpot() public view returns (uint256) {
+        return previousJackpot;
     }
 }

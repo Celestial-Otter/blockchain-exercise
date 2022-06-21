@@ -26,49 +26,6 @@ export const connectWallet = async () => {
   }
 };
 
-//!Test Function, Note: It works
-export const fetchGreetings = async () => {
-  // fetch greetings from contract
-  const { ethereum } = window;
-
-  if (!ethereum) {
-    alert("Please install MetaMask!");
-    return;
-  }
-
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const signer = provider.getSigner();
-  const greeterContract = new ethers.Contract(
-    greeterContractAddress,
-    Greeter.abi,
-    provider
-  );
-
-  const greeting = await greeterContract.greet();
-  return greeting;
-};
-
-//!Test Function, Note: It works
-export const getSymbol = async () => {
-  // fetch greetings from contract
-  const { ethereum } = window;
-
-  if (!ethereum) {
-    alert("Please install MetaMask!");
-    return;
-  }
-
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const signer = provider.getSigner();
-  const mokTokenContract = new ethers.Contract(
-    MOKTokenContractAddress,
-    MOKToken.abi,
-    provider
-  );
-  const symbol = await mokTokenContract.symbol();
-  return symbol;
-};
-
 //function for user to approve the lottery contract to spend tokens
 export const approve = async (amount) => {
   const { ethereum } = window;
@@ -95,6 +52,28 @@ export const approve = async (amount) => {
   console.log(tx);
 };
 
+//function to join the lottery
+export const joinLottery = async () => {
+  const { ethereum } = window;
+
+  if (!ethereum) {
+    alert("Please install MetaMask!");
+    return;
+  }
+
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
+  const mokLotteryContract = new ethers.Contract(
+    MOKLotteryContractAddress,
+    MOKLottery.abi,
+    provider
+  );
+  const join = await mokLotteryContract.populateTransaction.joinLottery();
+
+  const joinLottery = await signer.sendTransaction(join); // send transaction using the signer
+  console.log(joinLottery);
+};
+
 //function to get the ticket price
 export const getTicketPrice = async () => {
   const { ethereum } = window;
@@ -114,4 +93,88 @@ export const getTicketPrice = async () => {
 
   const ticketPrice = await mokLotteryContract.getTicketPrice();
   return ticketPrice;
+};
+
+//function to get the current jackpot
+export const getCurrentJackpot = async () => {
+  const { ethereum } = window;
+
+  if (!ethereum) {
+    alert("Please install MetaMask!");
+    return;
+  }
+
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
+  const mokLotteryContract = new ethers.Contract(
+    MOKLotteryContractAddress,
+    MOKLottery.abi,
+    provider
+  );
+
+  const currentJackpot = await mokLotteryContract.getJackpot();
+  return currentJackpot;
+};
+
+//function to get the previous jackpot
+export const getPreviousJackpot = async () => {
+  const { ethereum } = window;
+
+  if (!ethereum) {
+    alert("Please install MetaMask!");
+    return;
+  }
+
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
+  const mokLotteryContract = new ethers.Contract(
+    MOKLotteryContractAddress,
+    MOKLottery.abi,
+    provider
+  );
+
+  const previousJackpot = await mokLotteryContract.getPreviousJackpot();
+  return previousJackpot;
+};
+
+//function to get the winning ticket
+export const getWinningTicket = async () => {
+  const { ethereum } = window;
+
+  if (!ethereum) {
+    alert("Please install MetaMask!");
+    return;
+  }
+
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
+  const mokLotteryContract = new ethers.Contract(
+    MOKLotteryContractAddress,
+    MOKLottery.abi,
+    provider
+  );
+
+  const winningTicket = await mokLotteryContract.getWinningTicket();
+  return winningTicket;
+};
+
+//function to pick a winner
+export const pickWinner = async () => {
+  const { ethereum } = window;
+
+  if (!ethereum) {
+    alert("Please install MetaMask!");
+    return;
+  }
+
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
+  const mokLotteryContract = new ethers.Contract(
+    MOKLotteryContractAddress,
+    MOKLottery.abi,
+    provider
+  );
+
+  const pickWinner = await mokLotteryContract.pickWinner();
+  return pickWinner;
 };
