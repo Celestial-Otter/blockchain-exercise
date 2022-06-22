@@ -21,14 +21,20 @@ export default function App() {
 
   useEffect(() => {
     blockchain.connectWallet();
+
     blockchain
       .getCurrentJackpot()
       .then((jackpot) => setCurrentJackpot(jackpot));
+
     blockchain
       .getPreviousJackpot()
       .then((jackpot) => setPreviousJackpot(jackpot));
+
+    blockchain.getWinningTicket().then((ticket) => setWinningTicket(ticket));
+
     blockchain.getTicketPrice().then((price) => setTicketPrice(price));
 
+    //!temporary code
     setLockedUntil(moment().add(-1, "day").format("YYYY-MM-DD HH:mm:ss"));
   }, []);
 
@@ -38,7 +44,9 @@ export default function App() {
         currentJackpot,
         setCurrentJackpot,
         previousJackpot,
+        setPreviousJackpot,
         winningTicket,
+        setWinningTicket,
         lockedUntil,
         setLockedUntil,
         ticketPrice,

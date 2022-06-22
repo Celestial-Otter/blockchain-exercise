@@ -18,10 +18,10 @@ contract MOKLottery {
         owner = msg.sender;
         MOKToken = _token;
         lotteryPrice = 20 * (10**18);
-        previousJackpot = 0;
+        previousJackpot = 100;
         prizePool = 0;
         feePool = 0;
-        winningNumber = 0;
+        winningNumber = 6;
     }
 
     //Modifier to restrict the function to the manager
@@ -67,8 +67,10 @@ contract MOKLottery {
     //function to pick the winner
     function pickWinner() public managerOrOwner {
         uint256 index = roll() % players.length;
+        //winningNumber = index;
+        //previousJackpot = prizePool;
         IERC20(MOKToken).transfer(players[index], prizePool);
-        winningNumber = index;
+        prizePool = 0;
         players = new address[](0);
     }
 
@@ -95,5 +97,10 @@ contract MOKLottery {
     //function to get the previous jackpot
     function getPreviousJackpot() public view returns (uint256) {
         return previousJackpot;
+    }
+
+    //function to get the current winning number
+    function getWinningNumber() public view returns (uint256) {
+        return winningNumber;
     }
 }

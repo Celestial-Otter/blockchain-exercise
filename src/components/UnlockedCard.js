@@ -8,11 +8,28 @@ import moment from "moment";
 import * as blockchain from "../apis/blockchain";
 
 const UnlockedCard = () => {
-  const { setLockedUntil } = React.useContext(blockchainContext);
+  const {
+    setLockedUntil,
+    setPreviousJackpot,
+    setWinningTicket,
+    setCurrentJackpot,
+  } = React.useContext(blockchainContext);
+
   const rollLottery = async (e) => {
     e.preventDefault();
     console.log("Rolling");
-    //TODO add roll lottery logic
+    await blockchain.rollLottery().then(console.log("Rolled"));
+    await blockchain.getPreviousJackpot().then((jackpot) => {
+      setPreviousJackpot(jackpot);
+      console.log("Previous jackpot: " + jackpot);
+    });
+    await blockchain.getWinningTicket().then((ticket) => {
+      setWinningTicket(ticket);
+      console.log("Winning ticket: " + ticket);
+    });
+    await blockchain.getCurrentJackpot().then((jackpot) => {
+      setCurrentJackpot(jackpot);
+    });
 
     setLockedUntil(moment().add(5, "minute").format("YYYY-MM-DD HH:mm:ss"));
   };

@@ -113,6 +113,7 @@ export const getCurrentJackpot = async () => {
   );
 
   const currentJackpot = await mokLotteryContract.getJackpot();
+  console.log(currentJackpot + " current jackpot");
   return currentJackpot;
 };
 
@@ -134,6 +135,7 @@ export const getPreviousJackpot = async () => {
   );
 
   const previousJackpot = await mokLotteryContract.getPreviousJackpot();
+  console.log(previousJackpot + " previous jackpot");
   return previousJackpot;
 };
 
@@ -154,12 +156,13 @@ export const getWinningTicket = async () => {
     provider
   );
 
-  const winningTicket = await mokLotteryContract.getWinningTicket();
+  const winningTicket = await mokLotteryContract.getWinningNumber();
+  console.log(winningTicket + " is the winning ticket");
   return winningTicket;
 };
 
-//function to pick a winner
-export const pickWinner = async () => {
+//function to roll the lottery
+export const rollLottery = async () => {
   const { ethereum } = window;
 
   if (!ethereum) {
@@ -175,6 +178,8 @@ export const pickWinner = async () => {
     provider
   );
 
-  const pickWinner = await mokLotteryContract.pickWinner();
-  return pickWinner;
+  const roll = await mokLotteryContract.populateTransaction.pickWinner();
+
+  const rollLottery = await signer.sendTransaction(roll); // send transaction using the signer
+  console.log(rollLottery);
 };
