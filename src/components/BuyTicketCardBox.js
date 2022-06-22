@@ -7,12 +7,16 @@ import { blockchainContext } from "../context/blockchainContext";
 import * as blockchain from "../apis/blockchain";
 
 const BuyTicketCardBox = ({ title, description }) => {
-  const { ticketPrice } = React.useContext(blockchainContext);
+  const { ticketPrice, setCurrentJackpot } =
+    React.useContext(blockchainContext);
 
   const joinLottery = async (e) => {
     e.preventDefault();
     await blockchain.approve(ticketPrice).then(console.log("Approved"));
     await blockchain.joinLottery().then(console.log("Joined"));
+    await blockchain.getCurrentJackpot().then((jackpot) => {
+      setCurrentJackpot(jackpot);
+    });
   };
 
   return (

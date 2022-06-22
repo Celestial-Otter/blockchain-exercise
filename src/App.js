@@ -4,6 +4,7 @@
 import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
 import { Container } from "@mui/system";
+import Moment from "moment";
 
 import CardBox from "./components/CardBox";
 import BuyTicketCardBox from "./components/BuyTicketCardBox";
@@ -26,12 +27,17 @@ export default function App() {
       .getPreviousJackpot()
       .then((jackpot) => setPreviousJackpot(jackpot));
     blockchain.getTicketPrice().then((price) => setTicketPrice(price));
+
+    setLockedUntil(
+      Moment().add(5, "minutes").format("MMMM Do YYYY, h:mm:ss a")
+    );
   }, []);
 
   return (
     <blockchainContext.Provider
       value={{
         currentJackpot,
+        setCurrentJackpot,
         previousJackpot,
         winningTicket,
         lockedUntil,
@@ -43,7 +49,7 @@ export default function App() {
           <Grid item xs={4}>
             <CardBox
               title={"Current Jackpot"}
-              description={`${currentJackpot}`}
+              description={`${currentJackpot / 10 ** 18} $MOK`}
             />
           </Grid>
 

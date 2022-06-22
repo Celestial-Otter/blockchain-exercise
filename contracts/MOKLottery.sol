@@ -51,6 +51,7 @@ contract MOKLottery {
             )
         );
         players.push(msg.sender);
+        prizePool += lotteryPrice;
     }
 
     //function to roll a random number
