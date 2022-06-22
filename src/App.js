@@ -4,10 +4,11 @@
 import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
 import { Container } from "@mui/system";
-import Moment from "moment";
+import moment from "moment";
 
 import CardBox from "./components/CardBox";
 import BuyTicketCardBox from "./components/BuyTicketCardBox";
+import RollLotteryCardBox from "./components/RollLotteryCardBox";
 import * as blockchain from "./apis/blockchain";
 import { blockchainContext } from "./context/blockchainContext";
 
@@ -28,9 +29,7 @@ export default function App() {
       .then((jackpot) => setPreviousJackpot(jackpot));
     blockchain.getTicketPrice().then((price) => setTicketPrice(price));
 
-    setLockedUntil(
-      Moment().add(5, "minutes").format("MMMM Do YYYY, h:mm:ss a")
-    );
+    setLockedUntil(moment().add(-1, "day").format("YYYY-MM-DD HH:mm:ss"));
   }, []);
 
   return (
@@ -41,6 +40,7 @@ export default function App() {
         previousJackpot,
         winningTicket,
         lockedUntil,
+        setLockedUntil,
         ticketPrice,
       }}
     >
@@ -75,7 +75,10 @@ export default function App() {
           </Grid>
 
           <Grid item xs={4}>
-            <CardBox title={"Locked Until"} description={`${lockedUntil}`} />
+            <RollLotteryCardBox
+              title={"Locked Until"}
+              description={`${lockedUntil}`}
+            />
           </Grid>
         </Grid>
       </Container>
