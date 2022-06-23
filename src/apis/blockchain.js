@@ -183,3 +183,49 @@ export const rollLottery = async () => {
   const rollLottery = await signer.sendTransaction(roll); // send transaction using the signer
   console.log(rollLottery);
 };
+
+// function to get the current fee pool
+export const getFeePool = async () => {
+  const { ethereum } = window;
+
+  if (!ethereum) {
+    alert("Please install MetaMask!");
+    return;
+  }
+
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
+  const mokLotteryContract = new ethers.Contract(
+    MOKLotteryContractAddress,
+    MOKLottery.abi,
+    provider
+  );
+
+  const feePool = await mokLotteryContract.getFeePool();
+  console.log(feePool + " is the fee pool");
+  return feePool;
+};
+
+//function to withdraw the fee pool
+export const withdrawFeePool = async () => {
+  const { ethereum } = window;
+
+  if (!ethereum) {
+    alert("Please install MetaMask!");
+    return;
+  }
+
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
+  const mokLotteryContract = new ethers.Contract(
+    MOKLotteryContractAddress,
+    MOKLottery.abi,
+    provider
+  );
+
+  const withdraw =
+    await mokLotteryContract.populateTransaction.withdrawFeePool();
+
+  const withdrawFeePool = await signer.sendTransaction(withdraw); // send transaction using the signer
+  console.log(withdrawFeePool);
+};

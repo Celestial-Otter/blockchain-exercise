@@ -11,6 +11,7 @@ import BuyTicketCardBox from "./components/BuyTicketCardBox";
 import RollLotteryCardBox from "./components/RollLotteryCardBox";
 import * as blockchain from "./apis/blockchain";
 import { blockchainContext } from "./context/blockchainContext";
+import WithDrawFeeCardBox from "./components/WithdrawFeeCardBox";
 
 export default function App() {
   const [currentJackpot, setCurrentJackpot] = React.useState("");
@@ -18,6 +19,7 @@ export default function App() {
   const [winningTicket, setWinningTicket] = React.useState("");
   const [lockedUntil, setLockedUntil] = React.useState("");
   const [ticketPrice, setTicketPrice] = React.useState("");
+  const [currentFeePool, setFeePool] = React.useState("");
 
   useEffect(() => {
     blockchain.connectWallet();
@@ -33,6 +35,8 @@ export default function App() {
     blockchain.getWinningTicket().then((ticket) => setWinningTicket(ticket));
 
     blockchain.getTicketPrice().then((price) => setTicketPrice(price));
+
+    blockchain.getFeePool().then((feePool) => setFeePool(feePool));
 
     //!temporary code
     setLockedUntil(moment().add(-1, "day").format("YYYY-MM-DD HH:mm:ss"));
@@ -64,7 +68,7 @@ export default function App() {
           <Grid item xs={4}>
             <CardBox
               title={"Previous Jackpot"}
-              description={`${previousJackpot}`}
+              description={`${previousJackpot / 10 ** 18} $MOK`}
             />
           </Grid>
 
@@ -86,6 +90,13 @@ export default function App() {
             <RollLotteryCardBox
               title={"Locked Until"}
               description={`${lockedUntil}`}
+            />
+          </Grid>
+
+          <Grid item xs={4}>
+            <WithDrawFeeCardBox
+              title={"Withdraw Fees"}
+              description={`${currentFeePool / 10 ** 18} $MOK`}
             />
           </Grid>
         </Grid>
