@@ -11,8 +11,9 @@ contract MOKLottery {
     uint256 lotteryPrice;
     uint256 previousJackpot;
     uint256 winningNumber;
-    uint256 prizePool; //TODO: have money be split into this pool
-    uint256 feePool; //TODO: have money be split into this pool
+    uint256 prizePool;
+    uint256 feePool;
+    uint256 lockedUntil;
 
     constructor(address _token) {
         owner = msg.sender;
@@ -22,6 +23,7 @@ contract MOKLottery {
         prizePool = 0;
         feePool = 0;
         winningNumber = 0;
+        lockedUntil = 0;
     }
 
     //Modifier to restrict the function to the manager
@@ -114,5 +116,15 @@ contract MOKLottery {
     //function to get the current fee pool
     function getFeePool() public view returns (uint256) {
         return feePool;
+    }
+
+    //function to get the current locked until date
+    function getLockedUntil() public view returns (uint256) {
+        return lockedUntil;
+    }
+
+    //function to set the locked until date
+    function setLockedUntil(uint256 _date) public ownerOnly {
+        lockedUntil = _date;
     }
 }

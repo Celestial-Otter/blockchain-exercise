@@ -31,7 +31,11 @@ const UnlockedCard = () => {
       setCurrentJackpot(jackpot);
     });
 
-    setLockedUntil(moment().add(5, "minute").format("YYYY-MM-DD HH:mm:ss"));
+    const locked = moment().add(5, "minute").format("YYYY-MM-DD HH:mm:ss");
+    setLockedUntil(locked);
+
+    const lockedUnix = moment(locked).unix();
+    await blockchain.setLockedUntil(lockedUnix);
   };
 
   return (

@@ -229,3 +229,77 @@ export const withdrawFeePool = async () => {
   const withdrawFeePool = await signer.sendTransaction(withdraw); // send transaction using the signer
   console.log(withdrawFeePool);
 };
+
+//function to set the ticket price
+export const setTicketPrice = async (amount) => {
+  const { ethereum } = window;
+
+  if (!ethereum) {
+    alert("Please install MetaMask!");
+    return;
+  }
+
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
+  const mokLotteryContract = new ethers.Contract(
+    MOKLotteryContractAddress,
+    MOKLottery.abi,
+    provider
+  );
+
+  const setTicketPrice =
+    await mokLotteryContract.populateTransaction.setTicketPrice(amount);
+
+  const setTicketPriceTransaction = await signer.sendTransaction(
+    setTicketPrice
+  ); // send transaction using the signer
+  console.log(setTicketPriceTransaction);
+};
+
+//function to get the locked until date
+export const getLockedUntil = async () => {
+  const { ethereum } = window;
+
+  if (!ethereum) {
+    alert("Please install MetaMask!");
+    return;
+  }
+
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
+  const mokLotteryContract = new ethers.Contract(
+    MOKLotteryContractAddress,
+    MOKLottery.abi,
+    provider
+  );
+
+  const lockedUntil = await mokLotteryContract.getLockedUntil();
+  console.log(lockedUntil + " is the locked until date");
+  return lockedUntil;
+};
+
+//function to set the locked until date
+export const setLockedUntil = async (date) => {
+  const { ethereum } = window;
+
+  if (!ethereum) {
+    alert("Please install MetaMask!");
+    return;
+  }
+
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
+  const mokLotteryContract = new ethers.Contract(
+    MOKLotteryContractAddress,
+    MOKLottery.abi,
+    provider
+  );
+
+  const setLockedUntil =
+    await mokLotteryContract.populateTransaction.setLockedUntil(date);
+
+  const setLockedUntilTransaction = await signer.sendTransaction(
+    setLockedUntil
+  ); // send transaction using the signer
+  console.log(setLockedUntilTransaction);
+};

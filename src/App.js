@@ -19,7 +19,7 @@ export default function App() {
   const [winningTicket, setWinningTicket] = React.useState("");
   const [lockedUntil, setLockedUntil] = React.useState("");
   const [ticketPrice, setTicketPrice] = React.useState("");
-  const [currentFeePool, setFeePool] = React.useState("");
+  const [feePool, setFeePool] = React.useState("");
 
   useEffect(() => {
     blockchain.connectWallet();
@@ -38,8 +38,11 @@ export default function App() {
 
     blockchain.getFeePool().then((feePool) => setFeePool(feePool));
 
-    //!temporary code
-    setLockedUntil(moment().add(-1, "day").format("YYYY-MM-DD HH:mm:ss"));
+    blockchain
+      .getLockedUntil()
+      .then((lockedUntil) =>
+        setLockedUntil(moment.unix(lockedUntil).format("YYYY-MM-DD HH:mm:ss"))
+      );
   }, []);
 
   return (
@@ -54,6 +57,9 @@ export default function App() {
         lockedUntil,
         setLockedUntil,
         ticketPrice,
+        setTicketPrice,
+        feePool,
+        setFeePool,
       }}
     >
       <Container>
@@ -96,7 +102,7 @@ export default function App() {
           <Grid item xs={4}>
             <WithDrawFeeCardBox
               title={"Withdraw Fees"}
-              description={`${currentFeePool / 10 ** 18} $MOK`}
+              description={`${feePool / 10 ** 18} $MOK`}
             />
           </Grid>
         </Grid>
