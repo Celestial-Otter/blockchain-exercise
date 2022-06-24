@@ -24,6 +24,7 @@ contract MOKLottery {
         feePool = 0;
         winningNumber = 0;
         lockedUntil = 0;
+        manager = new address[](2);
     }
 
     //Modifier to restrict the function to the manager
@@ -34,7 +35,11 @@ contract MOKLottery {
 
     //Modifier to restrict the function to the manager or the owner
     modifier managerOrOwner() {
-        require(msg.sender == owner || msg.sender == manager[0]);
+        require(
+            msg.sender == owner ||
+                msg.sender == manager[0] ||
+                msg.sender == manager[1]
+        );
         _;
     }
 
@@ -95,7 +100,7 @@ contract MOKLottery {
 
     //function to set ticket price
     function setTicketPrice(uint256 _price) public ownerOnly {
-        lotteryPrice = _price;
+        lotteryPrice = _price * 10**18;
     }
 
     //function to get the current prize pool

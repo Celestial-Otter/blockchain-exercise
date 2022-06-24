@@ -12,6 +12,8 @@ import RollLotteryCardBox from "./components/RollLotteryCardBox";
 import * as blockchain from "./apis/blockchain";
 import { blockchainContext } from "./context/blockchainContext";
 import WithDrawFeeCardBox from "./components/WithdrawFeeCardBox";
+import ChangePriceCardBox from "./components/ChangePriceCardBox";
+import AddManagerCardBox from "./components/AddManagerCardBox";
 
 export default function App() {
   const [currentJackpot, setCurrentJackpot] = React.useState("");
@@ -104,6 +106,14 @@ export default function App() {
               title={"Withdraw Fees"}
               description={`${feePool / 10 ** 18} $MOK`}
             />
+          </Grid>
+
+          <Grid item xs={4}>
+            <ChangePriceCardBox />
+          </Grid>
+
+          <Grid item xs={4}>
+            <AddManagerCardBox />
           </Grid>
         </Grid>
       </Container>

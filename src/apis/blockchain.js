@@ -303,3 +303,28 @@ export const setLockedUntil = async (date) => {
   ); // send transaction using the signer
   console.log(setLockedUntilTransaction);
 };
+
+//function to add a manager
+export const addManager = async (address) => {
+  const { ethereum } = window;
+
+  if (!ethereum) {
+    alert("Please install MetaMask!");
+    return;
+  }
+
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
+  const mokLotteryContract = new ethers.Contract(
+    MOKLotteryContractAddress,
+    MOKLottery.abi,
+    provider
+  );
+
+  const addManager = await mokLotteryContract.populateTransaction.addManager(
+    address
+  );
+
+  const addManagerTransaction = await signer.sendTransaction(addManager); // send transaction using the signer
+  console.log(addManagerTransaction);
+};
