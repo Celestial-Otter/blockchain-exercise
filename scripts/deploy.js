@@ -16,15 +16,9 @@ async function main() {
   const [deployer] = await ethers.getSigners();
 
   console.log("Deploying contracts with the account:", deployer.address);
-  // We get the greeter contract to deploy
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
+  console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  await greeter.deployed();
-
-  console.log("Greeter deployed to:", greeter.address);
-
-  // We get the greeter contract to deploy
+  // We get the MOKToken contract to deploy
   const MOKToken = await ethers.getContractFactory("MOKToken");
   const mokToken = await MOKToken.deploy();
 
@@ -32,9 +26,7 @@ async function main() {
 
   // We get the MOKLottery contract to deploy
   const MOKLottery = await ethers.getContractFactory("MOKLottery");
-  const mokLottery = await MOKLottery.deploy(
-    "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
-  );
+  const mokLottery = await MOKLottery.deploy(`${mokToken.address}`);
 
   console.log("MOKLottery deployed to:", mokLottery.address);
 }
