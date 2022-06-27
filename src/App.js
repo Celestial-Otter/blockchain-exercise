@@ -39,7 +39,7 @@ export default function App() {
 
     blockchain.getWinningTicket().then((ticket) => setWinningTicket(ticket));
 
-    //blockchain.getTicketPrice().then((price) => setTicketPrice(price));
+    blockchain.getTicketPrice().then((price) => setTicketPrice(price));
 
     blockchain.getFeePool().then((feePool) => setFeePool(feePool));
 
@@ -49,7 +49,7 @@ export default function App() {
         setLockedUntil(moment.unix(lockedUntil).format("YYYY-MM-DD HH:mm:ss"))
       );
 
-    //blockchain.getApprovedAmount().then((amount) => setApprovedAmount(amount));
+    blockchain.getApprovedAmount().then((amount) => setApprovedAmount(amount));
 
     Promise.all([
       blockchain.getTicketPrice(),
@@ -57,17 +57,8 @@ export default function App() {
     ]).then(([price, amount]) => {
       if (amount / 10 ** 18 > price / 10 ** 18) {
         setApprove(true);
-        console.log(isApproved, "AAAAAAA");
-        console.log(amount / 10 ** 18, price / 10 ** 18);
       } else {
         setApprove(false);
-        console.log(isApproved, "BBBBBBB");
-        console.log(
-          "Approved: ",
-          amount / 10 ** 18,
-          "Price: ",
-          price / 10 ** 18
-        );
       }
     });
   }, []);

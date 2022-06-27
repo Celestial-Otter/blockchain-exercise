@@ -2,8 +2,8 @@ import { ethers } from "ethers";
 import MOKToken from "../artifacts/contracts/MOKToken.sol/MOKToken.json";
 import MOKLottery from "../artifacts/contracts/MOKLottery.sol/MOKLottery.json";
 
-let MOKTokenContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; // contract address
-let MOKLotteryContractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"; // contract address
+let MOKTokenContractAddress = "0xEEC8Ec7C25a18AFcB88e3DA1C32a4914a552eBB1"; // contract address
+let MOKLotteryContractAddress = "0xDDA029c729Ba8879a9F93Ee144234489bfAcd3f4"; // contract address
 export const connectWallet = async () => {
   // connect to wallet
   try {

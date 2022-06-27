@@ -7,7 +7,7 @@ import { blockchainContext } from "../context/blockchainContext";
 import * as blockchain from "../apis/blockchain";
 
 const ApproveCardBox = () => {
-  const { isApproved, setApprove, setApprovedAmount } =
+  const { isApproved, setApprove, setApprovedAmount, approvedAmount } =
     React.useContext(blockchainContext);
 
   const approveWallet = async (e) => {
@@ -28,7 +28,7 @@ const ApproveCardBox = () => {
           Approve
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Click to give the contract access to your tokens
+          Current balance: {approvedAmount / 10 ** 18}
         </Typography>
         <Button
           variant="contained"
