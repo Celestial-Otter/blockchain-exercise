@@ -7,4 +7,6 @@ export const blockchainContext = createContext({
   lockedUntil: 0,
   ticketPrice: 0,
   currentFeePool: 0,
+  isApproved: false,
+  approvedAmount: 0,
 });

@@ -6,41 +6,41 @@ import { Button } from "@mui/material";
 import { blockchainContext } from "../context/blockchainContext";
 import * as blockchain from "../apis/blockchain";
 
-const BuyTicketCardBox = ({ title, description }) => {
-  const { ticketPrice, setCurrentJackpot, setFeePool, isApproved } =
+const ApproveCardBox = () => {
+  const { isApproved, setApprove, setApprovedAmount } =
     React.useContext(blockchainContext);
 
-  const joinLottery = async (e) => {
+  const approveWallet = async (e) => {
     e.preventDefault();
-    await blockchain.joinLottery().then(console.log("Joined"));
-    await blockchain.getCurrentJackpot().then((jackpot) => {
-      setCurrentJackpot(jackpot);
+    const userBalance = await blockchain.getBalance().then((balance) => {
+      return balance;
     });
-    await blockchain.getFeePool().then((feePool) => {
-      setFeePool(feePool);
-    });
+    await blockchain.approve(userBalance).then(console.log("Approved"));
+
+    setApprovedAmount(userBalance);
+    setApprove(true);
   };
 
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {title}
+          Approve
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {description}
+          Click to give the contract access to your tokens
         </Typography>
         <Button
           variant="contained"
           color="primary"
-          onClick={joinLottery}
-          disabled={!isApproved}
+          onClick={approveWallet}
+          disabled={isApproved}
         >
-          Buy
+          Approve
         </Button>
       </CardContent>
     </Card>
   );
 };
 
-export default BuyTicketCardBox;
+export default ApproveCardBox;

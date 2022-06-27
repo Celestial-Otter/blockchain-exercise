@@ -14,6 +14,7 @@ import { blockchainContext } from "./context/blockchainContext";
 import WithDrawFeeCardBox from "./components/WithdrawFeeCardBox";
 import ChangePriceCardBox from "./components/ChangePriceCardBox";
 import AddManagerCardBox from "./components/AddManagerCardBox";
+import ApproveCardBox from "./components/ApproveCardBox";
 
 export default function App() {
   const [currentJackpot, setCurrentJackpot] = React.useState("");
@@ -22,6 +23,8 @@ export default function App() {
   const [lockedUntil, setLockedUntil] = React.useState("");
   const [ticketPrice, setTicketPrice] = React.useState("");
   const [feePool, setFeePool] = React.useState("");
+  const [isApproved, setApprove] = React.useState(false);
+  const [approvedAmount, setApprovedAmount] = React.useState("");
 
   useEffect(() => {
     blockchain.connectWallet();
@@ -36,7 +39,7 @@ export default function App() {
 
     blockchain.getWinningTicket().then((ticket) => setWinningTicket(ticket));
 
-    blockchain.getTicketPrice().then((price) => setTicketPrice(price));
+    //blockchain.getTicketPrice().then((price) => setTicketPrice(price));
 
     blockchain.getFeePool().then((feePool) => setFeePool(feePool));
 
@@ -45,6 +48,28 @@ export default function App() {
       .then((lockedUntil) =>
         setLockedUntil(moment.unix(lockedUntil).format("YYYY-MM-DD HH:mm:ss"))
       );
+
+    //blockchain.getApprovedAmount().then((amount) => setApprovedAmount(amount));
+
+    Promise.all([
+      blockchain.getTicketPrice(),
+      blockchain.getApprovedAmount(),
+    ]).then(([price, amount]) => {
+      if (amount / 10 ** 18 > price / 10 ** 18) {
+        setApprove(true);
+        console.log(isApproved, "AAAAAAA");
+        console.log(amount / 10 ** 18, price / 10 ** 18);
+      } else {
+        setApprove(false);
+        console.log(isApproved, "BBBBBBB");
+        console.log(
+          "Approved: ",
+          amount / 10 ** 18,
+          "Price: ",
+          price / 10 ** 18
+        );
+      }
+    });
   }, []);
 
   return (
@@ -62,6 +87,10 @@ export default function App() {
         setTicketPrice,
         feePool,
         setFeePool,
+        isApproved,
+        setApprove,
+        approvedAmount,
+        setApprovedAmount,
       }}
     >
       <Container>
@@ -85,6 +114,10 @@ export default function App() {
               title={"Winning Ticket"}
               description={`${winningTicket}`}
             />
+          </Grid>
+
+          <Grid item xs={4}>
+            <ApproveCardBox />
           </Grid>
 
           <Grid item xs={4}>
